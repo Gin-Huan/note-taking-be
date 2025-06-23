@@ -14,8 +14,8 @@ export const databaseConfig: TypeOrmModuleAsyncOptions = {
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
     entities: [User, Note],
-    synchronize: configService.get('NODE_ENV') === 'development',
-    logging: configService.get('NODE_ENV') === 'development',
+    synchronize: false,
+    logging: configService.get('DB_LOGGING', false),
     migrations: ['dist/migrations/*.js'],
     migrationsTableName: 'migrations',
   }),
@@ -33,5 +33,5 @@ export const AppDataSource = new DataSource({
   entities: ['src/**/*.entity.ts'],
   migrations: ['src/migrations/*.ts'],
   synchronize: false,
-  logging: true,
+  logging: process.env.DB_LOGGING === 'true',
 });

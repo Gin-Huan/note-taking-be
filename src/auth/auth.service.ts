@@ -29,9 +29,19 @@ export class AuthService {
     expires_in: string;
   }> {
     const payload = { email: user.email, sub: user.id };
-    const expiresIn = this.configService.get('JWT_EXPIRATION', '7d');
+    const expiresIn = this.configService.get('JWT_EXPIRATION', '1d');
     
-    const { password, ...userWithoutPassword } = user;
+    const userWithoutPassword = {
+      id: user.id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      isActive: user.isActive,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      notes: user.notes,
+      fullName: user.fullName,
+    };
     
     return {
       access_token: this.jwtService.sign(payload),

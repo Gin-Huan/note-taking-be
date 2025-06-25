@@ -25,12 +25,11 @@ export class CreateUserDto {
   @ApiProperty({
     description: 'User last name',
     example: 'Doe',
-    minLength: 2,
+    minLength: 1,
     maxLength: 50,
   })
   @IsString()
-  @IsNotEmpty()
-  @MinLength(2)
+  @MinLength(1)
   @MaxLength(50)
   lastName: string;
 

@@ -37,9 +37,12 @@ export class NotesService {
 
     this.applyFilters(queryBuilder, { q, category, tags, isPinned, isArchived });
 
-    // Apply sorting
+    // Always sort by isPinned first (pinned notes at top)
+    queryBuilder.orderBy('note.isPinned', 'DESC');
+
+    // Apply additional sorting if specified
     if (sortBy) {
-      queryBuilder.orderBy(`note.${sortBy}`, sortOrder);
+      queryBuilder.addOrderBy(`note.${sortBy}`, sortOrder);
     }
 
     // Add secondary sort by createdAt for consistency
@@ -65,7 +68,7 @@ export class NotesService {
 
   async findOne(id: string, userId: string): Promise<Note> {
     const note = await this.noteRepository.findOne({
-      where: { id, userId },
+      where: { id },
     });
 
     if (!note) {
@@ -78,7 +81,17 @@ export class NotesService {
   async update(id: string, updateNoteDto: UpdateNoteDto, userId: string): Promise<Note> {
     const note = await this.findOne(id, userId);
     
-    Object.assign(note, updateNoteDto);
+    // Extract updatedAt from DTO and handle it separately
+    const { updatedAt, ...updateData } = updateNoteDto;
+    
+    // Apply all other fields
+    Object.assign(note, updateData);
+    
+    // If updatedAt is provided, set it manually, otherwise let TypeORM handle it
+    if (updatedAt) {
+      note.updatedAt = new Date(updatedAt);
+    }
+    
     return this.noteRepository.save(note);
   }
 

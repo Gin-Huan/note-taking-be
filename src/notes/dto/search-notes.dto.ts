@@ -46,7 +46,9 @@ export class SearchNotesDto {
   })
   @IsOptional()
   @IsBoolean()
-  @Transform(({ value }) => value === 'true')
+  @Transform(({obj, key}) => {
+    return obj[key] === 'true' ? true : obj[key] === 'false' ? false : obj[key];
+  })
   isArchived?: boolean;
 
   @ApiPropertyOptional({
@@ -86,5 +88,5 @@ export class SearchNotesDto {
   })
   @IsOptional()
   @Type(() => Number)
-  limit?: number = 10;
+  limit?: number = 1;
 }

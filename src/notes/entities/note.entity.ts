@@ -36,6 +36,9 @@ export class Note {
   @Column('json', { nullable: true })
   tags: string[];
 
+  @Column({ length: 7, nullable: true })
+  color: string;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 

@@ -32,6 +32,10 @@ export class NoteResponseDto {
 
   @ApiProperty()
   @Expose()
+  color: string;
+
+  @ApiProperty()
+  @Expose()
   createdAt: Date;
 
   @ApiProperty()

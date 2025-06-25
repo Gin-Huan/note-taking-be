@@ -17,6 +17,7 @@ describe('NotesService', () => {
     content: 'Test content',
     category: 'work',
     isPinned: false,
+    color: '#000000',
     isArchived: false,
     tags: ['test'],
     createdAt: new Date(),

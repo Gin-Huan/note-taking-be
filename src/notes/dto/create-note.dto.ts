@@ -65,4 +65,14 @@ export class CreateNoteDto {
   @IsString({ each: true })
   @ArrayMaxSize(10)
   tags?: string[];
+
+  @ApiPropertyOptional({
+    description: 'Note color in hex format',
+    example: '#FF5733',
+    maxLength: 7,
+  })
+  @IsOptional()
+  @IsString()
+  @MaxLength(7)
+  color?: string;
 }

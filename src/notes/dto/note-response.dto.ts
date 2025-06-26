@@ -36,26 +36,10 @@ export class NoteResponseDto {
 
   @ApiProperty()
   @Expose()
-  @Transform(({ value }) => {
-    if (value) {
-      const date = new Date(value);
-      const vietnamTime = new Date(date.getTime() + (7 * 60 * 60 * 1000)); // UTC+7
-      return vietnamTime;
-    }
-    return value;
-  })
   createdAt: Date;
 
   @ApiProperty()
   @Expose()
-  @Transform(({ value }) => {
-    if (value) {
-      const date = new Date(value);
-      const vietnamTime = new Date(date.getTime() + (7 * 60 * 60 * 1000)); // UTC+7
-      return vietnamTime;
-    }
-    return value;
-  })
   updatedAt: Date;
 
   @ApiProperty()
